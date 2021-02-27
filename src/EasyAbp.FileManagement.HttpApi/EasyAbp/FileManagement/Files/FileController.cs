@@ -12,7 +12,7 @@ using Volo.Abp.Application.Dtos;
 namespace EasyAbp.FileManagement.Files
 {
     [RemoteService(Name = "EasyAbpFileManagement")]
-    [Route("/api/fileManagement/file")]
+    [Route("/api/file-management/file")]
     public class FileController : FileManagementController
     {
         private readonly IFileAppService _service;
@@ -67,14 +67,14 @@ namespace EasyAbp.FileManagement.Files
         [Consumes("multipart/form-data")]
         public async Task<CreateManyFileOutput> CreateManyAsync([FromForm] CreateManyFileActionInput input)
         {
-            if (input.File.IsNullOrEmpty())
+            if (input.Files.IsNullOrEmpty())
             {
                 throw new NoUploadedFileException();
             }
 
             var createFileDtos = new List<CreateFileInput>();
             
-            foreach (var file in input.File)
+            foreach (var file in input.Files)
             {
                 var fileName = input.GenerateUniqueFileName ? GenerateUniqueFileName(file) : file.FileName;
 

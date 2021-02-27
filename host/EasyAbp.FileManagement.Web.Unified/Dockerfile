@@ -1,11 +1,11 @@
 #See https://aka.ms/containerfastmode to understand how Visual Studio uses this Dockerfile to build your images for faster debugging.
 
-FROM mcr.microsoft.com/dotnet/core/aspnet:3.1-buster-slim AS base
+FROM mcr.microsoft.com/dotnet/aspnet:5.0-buster-slim AS base
 WORKDIR /app
 EXPOSE 80
 EXPOSE 443
 
-FROM mcr.microsoft.com/dotnet/core/sdk:3.1-buster AS build
+FROM mcr.microsoft.com/dotnet/sdk:5.0-buster-slim AS build
 WORKDIR /src
 COPY ["host/EasyAbp.FileManagement.Web.Unified/EasyAbp.FileManagement.Web.Unified.csproj", "host/EasyAbp.FileManagement.Web.Unified/"]
 COPY ["src/EasyAbp.FileManagement.Application/EasyAbp.FileManagement.Application.csproj", "src/EasyAbp.FileManagement.Application/"]
@@ -16,6 +16,7 @@ COPY ["host/EasyAbp.FileManagement.Host.Shared/EasyAbp.FileManagement.Host.Share
 COPY ["src/EasyAbp.FileManagement.Web/EasyAbp.FileManagement.Web.csproj", "src/EasyAbp.FileManagement.Web/"]
 COPY ["src/EasyAbp.FileManagement.HttpApi/EasyAbp.FileManagement.HttpApi.csproj", "src/EasyAbp.FileManagement.HttpApi/"]
 COPY ["src/EasyAbp.FileManagement.EntityFrameworkCore/EasyAbp.FileManagement.EntityFrameworkCore.csproj", "src/EasyAbp.FileManagement.EntityFrameworkCore/"]
+COPY Directory.Build.props .
 RUN dotnet restore "host/EasyAbp.FileManagement.Web.Unified/EasyAbp.FileManagement.Web.Unified.csproj"
 COPY . .
 WORKDIR "/src/host/EasyAbp.FileManagement.Web.Unified"
